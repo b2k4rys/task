@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ad List</title>
+</head>
+<body>
+    <h2>Ad List</h2>
+    <form method="get">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search...">
+        <select name="category">
+            <option value="">All Categories</option>
+            {% for value, label in category_choices %}
+                <option value="{{ value }}" {% if category == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <select name="condition">
+            <option value="">All Conditions</option>
+            <option value="new" {% if condition == 'new' %}selected{% endif %}>New</option>
+            <option value="used" {% if condition == 'used' %}selected{% endif %}>Used</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    {% for ad in page_obj %}
+        <div>
+            <h3>{{ ad.title }}</h3>
+            <p>{{ ad.description }}</p>
+            {% if ad.image_url %}
+                <img src="{{ ad.image_url }}" alt="Image" width="100">
+            {% endif %}
+            <p>Category: {{ ad.get_category_display }}</p>
+            <p>Condition: {{ ad.get_condition_display }}</p>
+            <p>Created: {{ ad.created_at }}</p>
+            <a href="{% url 'ad_edit' ad.id %}">Edit</a>
+            <a href="{% url 'ad_delete' ad.id %}">Delete</a>
+            <a href="{% url 'proposal_create' ad.id ad.id %}">Propose Exchange</a>
+        </div>
+    {% endfor %}
+    <div>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+        {% endif %}
+    </div>
+    <a href="{% url 'ad_create' %}">Create New Ad</a>
+</body>
+</html>

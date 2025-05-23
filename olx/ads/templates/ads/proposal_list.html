@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proposal List</title>
+</head>
+<body>
+    <h2>Exchange Proposals</h2>
+    <form method="get">
+        <input type="text" name="sender" value="{{ sender }}" placeholder="Sender ID">
+        <input type="text" name="receiver" value="{{ receiver }}" placeholder="Receiver ID">
+        <select name="status">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="accepted" {% if status == 'accepted' %}selected{% endif %}>Accepted</option>
+            <option value="rejected" {% if status == 'rejected' %}selected{% endif %}>Rejected</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    {% for proposal in proposals %}
+        <div>
+            <p>From: {{ proposal.ad_sender.title }}</p>
+            <p>To: {{ proposal.ad_receiver.title }}</p>
+            <p>Comment: {{ proposal.comment }}</p>
+            <p>Status: {{ proposal.status }}</p>
+            <p>Created: {{ proposal.created_at }}</p>
+            <a href="{% url 'proposal_update' proposal.id %}">Update Status</a>
+        </div>
+    {% endfor %}
+    <a href="{% url 'ad_list' %}">Back to Ads</a>
+</body>
+</html>

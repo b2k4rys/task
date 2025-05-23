@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Proposal</title>
+</head>
+<body>
+    <h2>Update Proposal</h2>
+    <p>From: {{ proposal.ad_sender.title }} to {{ proposal.ad_receiver.title }}</p>
+    <p>Current Status: {{ proposal.status }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <select name="status">
+            {% for value, label in proposal.status.field.choices %}
+                <option value="{{ value }}" {% if proposal.status == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Update</button>
+    </form>
+    <a href="{% url 'proposal_list' %}">Back to Proposals</a>
+</body>
+</html>

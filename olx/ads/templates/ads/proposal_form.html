@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Propose Exchange</title>
+</head>
+<body>
+    <h2>Propose Exchange</h2>
+    <p>From: {{ ad_sender.title }}</p>
+    <p>To: {{ ad_receiver.title }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <label for="comment">Comment:</label>
+        <textarea name="comment" id="comment" rows="4"></textarea>
+        <button type="submit">Submit Proposal</button>
+    </form>
+    <a href="{% url 'ad_list' %}">Back to List</a>
+</body>
+</html>
