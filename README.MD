@@ -21,7 +21,6 @@ Create a .env file in the olx folder: (on Mac)
 - touch .env 
 
 Open .env and add 
-- 
 DB_NAME=myproject_db
 DB_USER=postgres
 DB_PASSWORD=your_postgres_password
